@@ -2,8 +2,8 @@ def matrix_size():
     # user inputs the size of a matrix m x n (rows x columns)
     # return rows
     # return columns
-    rows = input("Enter the number of rows in the matrix:")
-    columns = input("Enter the number of columns" )
+    rows = input("Enter the number of rows in the matrix: ")
+    columns = input("Enter the number of columns: ")
 
     return rows, columns
 
@@ -81,6 +81,27 @@ def scalar_multi(matrix, constant):
     return final_matrix
 
 
+def matrix_multiplication(matrix1, matrix2):
+    # multiplies 2 matrices
+    resultant = []
+
+    for i in range(len(matrix1)):
+        row = []
+        for j in range(len(matrix2[0])):
+            number = 0
+            for k in range(len(matrix1[0])):
+                number += matrix1[i][k] * matrix2[k][j]
+            row.append(number)
+        resultant.append(row)
+
+    return resultant
+
+
+def matrix_rref(matrx):
+    # puts a matrix into reduced row echelon form
+    a = 0 # temporary placeholder
+
+
 def output(matrix):
     # outputs the resulting matrix
     print "The resulting matrix is: "
@@ -93,33 +114,56 @@ def main():
 
     flag = True
     while flag:
-        operation = raw_input("What operation do you want to perform: (add, subtract, transpose, scalar multiplication)")
-        if operation == "add" or operation == "subtract" or operation == "transpose" or operation == "scalar multiplication":
+        print """What operation do you want to perform:
+(a: add, b: subtract, c: transpose, d: scalar multiplication, e: matrix multiplication, f: rref)
+        """
+        operation = raw_input()
+        if operation == "a" or operation == "b" or operation == "c" or operation == "d" or operation == "e":
             flag = False
+        else:
+            print "Please input a proper vale"
 
-    if operation == "add":
+    if operation == "a":
         rows, columns = matrix_size()
         matrix1 = matrix_input(rows, columns)
         matrix2 = matrix_input(rows, columns)
 
         final = matrix_addition(matrix1, matrix2)
-    elif operation == "subtract":
+    elif operation == "b":
         rows, columns = matrix_size()
         matrix1 = matrix_input(rows, columns)
         matrix2 = matrix_input(rows, columns)
 
         final = matrix_subtraction(matrix1, matrix2)
-    elif operation == "transpose":
+    elif operation == "c":
         rows, columns = matrix_size()
         matrix = matrix_input(rows, columns)
 
         final = matrix_transpose(rows, columns, matrix)
-    elif operation == "scalar multiplication":
+    elif operation == "d":
         rows, columns = matrix_size()
         matrix = matrix_input(rows, columns)
         scale = input("What number would you like to multiply matrix by? ")
 
         final = scalar_multi(matrix, scale)
+    elif operation == "e":
+        flag = True
+
+        while flag:
+            rows1, columns1 = matrix_size()
+            rows2, columns2 = matrix_size()
+            if columns1 != rows2:
+                print "The number of columns of the first matrix does not equal to the number of rows in the second matrix"
+                print "Please try again."
+            else:
+                flag = False
+
+        matrix1 = matrix_input(rows1, columns1)
+        matrix2 = matrix_input(rows2, columns2)
+
+        final = matrix_multiplication(matrix1, matrix2)
+    elif operation == "f":
+        a = 0 # temporary placeholder
 
     output(final)
 
